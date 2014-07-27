@@ -3,15 +3,9 @@ __author__ = 'keinmark'
 #!/usr/bin/env python
 from Tkinter import *
 import sqlite3
-
-def newTask(event):
-    print "hallo"
-
-def watchTasks(event):
-    print "hallo"
-
-def oldTask(event):
-    print "hallo"
+import EraseTasks
+import NewTask
+import WatchTasks
 
 def initializeDb():
     connection = sqlite3.connect("stasks.db")
@@ -25,14 +19,16 @@ def initializeDb():
       doneTS TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
+    connection.commit()
 
 initializeDb()
 
 root = Tk()
-root.title("Whois Tool")
+root.title("Stasks")
 root.resizable(0, 0)
 root.geometry("500x500")
-root.bind('<Control-N>', newTask)
-root.bind('<Control-W>', newTask)
-root.bind('<Control-O>', newTask)
+root.focus_set()
+root.bind('<Control-N>', NewTask.newTask)
+root.bind('<Control-W>', WatchTasks.watchTasks)
+root.bind('<Control-E>', EraseTasks.eraseTask)
 root.mainloop()
