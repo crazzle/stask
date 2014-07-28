@@ -1,0 +1,3 @@
+stask
+=====
+Stack your tasks
