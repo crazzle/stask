@@ -3,10 +3,12 @@ __author__ = 'keinmark'
 from Tkinter import *
 import sqlite3
 
-def newTask(event):
+
+def newTask():
     root = Tk()
     root.title("New Task")
     root.resizable(0, 0)
+    root.attributes("-topmost", True)
 
     t = Text(root, height=2, width=50)
     t.pack(side=LEFT, fill=Y)
@@ -22,3 +24,8 @@ def newTask(event):
         root.destroy()
 
     t.bind('<Return>', saveAndDispose)
+
+    root.iconify()
+    root.update()
+    root.deiconify()
+    root.mainloop()

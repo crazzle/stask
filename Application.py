@@ -1,11 +1,11 @@
+from interactions import EraseTasks, WatchTasks, NewTask
+from libs import pyhk
+import sqlite3
+
 __author__ = 'keinmark'
 
-#!/usr/bin/env python
-from Tkinter import *
-import sqlite3
-import EraseTasks
-import NewTask
-import WatchTasks
+global closed
+closed = True
 
 def initializeDb():
     connection = sqlite3.connect("stasks.db")
@@ -21,14 +21,31 @@ def initializeDb():
     """)
     connection.commit()
 
+def openNewTask():
+   openInteraction(NewTask.newTask)
+
+def openWatchTask():
+    openInteraction(WatchTasks.watchTasks)
+
+def openEraseTask():
+    openInteraction(EraseTasks.eraseTask)
+
+def openInteraction(interaction):
+    global closed
+    if closed:
+        closed = False
+        interaction()
+        closed = True
+
 initializeDb()
 
-root = Tk()
-root.title("Stasks")
-root.resizable(0, 0)
-root.geometry("500x500")
-root.focus_set()
-root.bind('<Control-N>', NewTask.newTask)
-root.bind('<Control-W>', WatchTasks.watchTasks)
-root.bind('<Control-E>', EraseTasks.eraseTask)
-root.mainloop()
+#create pyhk class instance
+hot = pyhk.pyhk()
+
+#add hotkey
+hot.addHotkey(['Shift', 'Alt', '1'], openNewTask)
+hot.addHotkey(['Shift', 'Alt', '2'], openWatchTask)
+hot.addHotkey(['Shift', 'Alt', '3'], openEraseTask)
+
+#start looking for hotkey.
+hot.start()

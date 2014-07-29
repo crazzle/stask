@@ -4,10 +4,13 @@ from Tkinter import *
 import sqlite3
 import datetime
 
-def eraseTask(event):
+
+def eraseTask():
     root = Tk()
     root.title("Watch Task")
     root.resizable(0, 0)
+    root.attributes("-topmost", True)
+
     connection = sqlite3.connect("stasks.db")
     cursor = connection.cursor()
     rows = cursor.execute("select * from tasks where done=0 order by insertTS DESC")
@@ -18,8 +21,8 @@ def eraseTask(event):
         date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
         inserted = date
         title = row[1]
-        id = row[0]
-        entries.append((title, inserted, id))
+        task_id = row[0]
+        entries.append((title, inserted, task_id))
 
     global begin
     begin = 0
@@ -92,3 +95,9 @@ def eraseTask(event):
     root.bind('<s>', moveDown)
 
     show(begin, end, chosen)
+
+    root.iconify()
+    root.update()
+    root.deiconify()
+
+    root.mainloop()

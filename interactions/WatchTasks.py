@@ -4,10 +4,12 @@ from Tkinter import *
 import sqlite3
 import datetime
 
-def watchTasks(event):
+def watchTasks():
     root = Tk()
     root.title("Watch Task")
     root.resizable(0, 0)
+    root.attributes("-topmost", True)
+
     connection = sqlite3.connect("stasks.db")
     cursor = connection.cursor()
     rows = cursor.execute("select * from tasks order by done, insertTS DESC")
@@ -77,3 +79,9 @@ def watchTasks(event):
     root.bind('<s>', moveDown)
 
     show(begin, end)
+
+    root.iconify()
+    root.update()
+    root.deiconify()
+
+    root.mainloop()
