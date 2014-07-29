@@ -8,12 +8,8 @@ def newTask(event):
     root.title("New Task")
     root.resizable(0, 0)
 
-    s = Scrollbar(root)
     t = Text(root, height=2, width=50)
-    s.pack(side=RIGHT, fill=Y)
     t.pack(side=LEFT, fill=Y)
-    s.config(command=t.yview)
-    t.config(yscrollcommand=s.set)
     t.focus_set()
 
     def saveAndDispose(event):

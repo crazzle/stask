@@ -10,16 +10,16 @@ def watchTasks(event):
     root.resizable(0, 0)
     connection = sqlite3.connect("stasks.db")
     cursor = connection.cursor()
-    rows = cursor.execute("select * from tasks order by done ASC, insertTS DESC")
+    rows = cursor.execute("select * from tasks order by done, insertTS DESC")
     connection.commit()
 
-    entries = set()
+    entries = list()
     for row in rows:
         done = row[3]
         date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
         inserted = date
         title = row[1]
-        entries.add((title, inserted, done))
+        entries.append((title, inserted, done))
 
     def dispose(event):
         root.destroy()

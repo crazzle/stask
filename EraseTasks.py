@@ -13,13 +13,13 @@ def eraseTask(event):
     rows = cursor.execute("select * from tasks where done=0 order by insertTS DESC")
     connection.commit()
 
-    entries = set()
+    entries = list()
     for row in rows:
         date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
         inserted = date
         title = row[1]
         id = row[0]
-        entries.add((title, inserted, id))
+        entries.append((title, inserted, id))
 
     global begin
     begin = 0
