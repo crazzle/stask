@@ -19,7 +19,11 @@ class NewTaskInteraction(BaseInteraction.BaseInteraction):
             dbhelper.persist(title)
             root.destroy()
 
+        def self_destroy(event):
+            root.destroy()
+
         t.bind('<Return>', save_and_dispose)
+        root.bind('<Escape>', self_destroy)
 
         self.let_interact(root)
 

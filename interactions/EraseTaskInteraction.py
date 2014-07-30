@@ -76,9 +76,13 @@ class EraseTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
                     container_index += 1
                 i += 1
 
+        def self_destroy(event):
+            root.destroy()
+
         root.bind('<Return>', erase_and_dispose)
         root.bind('<w>', move_up)
         root.bind('<s>', move_down)
+        root.bind('<Escape>', self_destroy)
 
         show(self.begin, self.end, self.chosen)
         self.let_interact(root)

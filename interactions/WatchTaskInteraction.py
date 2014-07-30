@@ -68,9 +68,13 @@ class WatchTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
                 i += 1
             root.update()
 
+        def self_destroy(event):
+            root.destroy()
+
         root.bind('<Return>', dispose)
         root.bind('<w>', move_up)
         root.bind('<s>', move_down)
+        root.bind('<Escape>', self_destroy)
 
         show(self.begin, self.end)
         self.let_interact(root)
