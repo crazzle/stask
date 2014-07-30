@@ -6,17 +6,19 @@ import sqlite3
 import datetime
 
 class WatchTaskInteraction(BaseInteraction.BaseInteraction):
-    def execute(self):
-        root = Tk()
-        root.title("Watch Task")
-        root.resizable(0, 0)
-        root.attributes("-topmost", True)
+    begin = 0
+    end = 5
 
+    def re_init_vars(self):
+        self.begin = 0
+        self.end = 5
+
+    @staticmethod
+    def get_all_entries():
         connection = sqlite3.connect("stasks.db")
         cursor = connection.cursor()
         rows = cursor.execute("select * from tasks order by done, insertTS DESC")
         connection.commit()
-
         entries = list()
         for row in rows:
             done = row[3]
@@ -24,30 +26,26 @@ class WatchTaskInteraction(BaseInteraction.BaseInteraction):
             inserted = date
             title = row[1]
             entries.append((title, inserted, done))
+        return entries
+
+    def execute(self):
+        root = self.initialize_window("Watch Tasks")
+        entries = self.get_all_entries()
 
         def dispose(event):
             root.destroy()
 
-        global begin
-        begin = 0
-        global end
-        end = 5
+        def move_down(event):
+            if self.end + 1 < len(entries):
+                self.begin += 1
+                self.end += 1
+            show(self.begin, self.end)
 
-        def moveDown(event):
-            global end
-            global begin
-            if end + 1 < len(entries):
-                begin += 1
-                end += 1
-            show(begin, end)
-
-        def moveUp(event):
-            global end
-            global begin
-            if begin - 1 >= 0:
-                begin -= 1
-                end -= 1
-            show(begin, end)
+        def move_up(event):
+            if self.begin - 1 >= 0:
+                self.begin -= 1
+                self.end -= 1
+            show(self.begin, self.end)
 
         all = set()
         def show(begin, end):
@@ -63,30 +61,25 @@ class WatchTaskInteraction(BaseInteraction.BaseInteraction):
                         color = "grey"
                     container = LabelFrame(root, bd=0, bg="grey", height=2)
                     inserted = entry[1]
-                    insertedLabel = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)
-                    insertedLabel.pack(fill=X)
+                    inserted_label = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)
+                    inserted_label.pack(fill=X)
                     title = entry[0]
                     if len(title) > 50:
                         title = title[:51]
                         title += "..."
-                    titleLabel = Label(container, text=title, fg=color, justify=LEFT, anchor=W, width=55)
-                    titleLabel.pack(fill=X)
+                    title_label = Label(container, text=title, fg=color, justify=LEFT, anchor=W, width=55)
+                    title_label.pack(fill=X)
                     container.grid(row=i, column=1, sticky=W)
                     all.add(container)
                 i += 1
 
-
         root.bind('<Return>', dispose)
-        root.bind('<w>', moveUp)
-        root.bind('<s>', moveDown)
+        root.bind('<w>', move_up)
+        root.bind('<s>', move_down)
 
-        show(begin, end)
-
-        root.iconify()
-        root.update()
-        root.deiconify()
-
-        root.mainloop()
+        show(self.begin, self.end)
+        self.let_interact(root)
+        self.re_init_vars()
 
     def get_hotkey(self):
        return ['Shift', 'Alt', '2']

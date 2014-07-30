@@ -5,18 +5,26 @@ from Tkinter import *
 import sqlite3
 import datetime
 
-class EraseTaskInteraction(BaseInteraction.BaseInteraction):
-    def execute(self):
-        root = Tk()
-        root.title("Watch Task")
-        root.resizable(0, 0)
-        root.attributes("-topmost", True)
 
+class EraseTaskInteraction(BaseInteraction.BaseInteraction):
+
+    begin = 0
+    end = 5
+    chosen = 0
+    id = -1
+
+    def re_init_vars(self):
+        self.begin = 0
+        self.end = 5
+        self.chosen = 0
+        self.id = -1
+
+    @staticmethod
+    def get_all_open_entries():
         connection = sqlite3.connect("stasks.db")
         cursor = connection.cursor()
         rows = cursor.execute("select * from tasks where done=0 order by insertTS DESC")
         connection.commit()
-
         entries = list()
         for row in rows:
             date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
@@ -24,48 +32,38 @@ class EraseTaskInteraction(BaseInteraction.BaseInteraction):
             title = row[1]
             task_id = row[0]
             entries.append((title, inserted, task_id))
+        return entries
 
-        global begin
-        begin = 0
-        global end
-        end = 5
-        global chosen
-        chosen = 0
-        global id
-        id = -1
+    def execute(self):
+        root = self.initialize_window("Erase Tasks")
+        entries = self.get_all_open_entries()
 
-        def eraseAndDispose(event):
+        def erase_and_dispose(event):
             connection = sqlite3.connect("stasks.db")
             cursor = connection.cursor()
-            cursor.execute("update tasks set done=1 where id=?", [id])
+            cursor.execute("update tasks set done=1 where id=?", [self.id])
             connection.commit()
             root.destroy()
 
-        def moveDown(event):
-            global end
-            global begin
-            global chosen
-            if (chosen == end) and (end + 1 < len(entries)):
-                begin += 1
-                end += 1
-            if chosen < len(entries)-1:
-                chosen += 1
-            show(begin, end, chosen)
+        def move_down(event):
+            if (self.chosen == self.end) and (self.end + 1 < len(entries)):
+                self.begin += 1
+                self.end += 1
+            if self.chosen < len(entries)-1:
+                self.chosen += 1
+            show(self.begin, self.end, self.chosen)
 
-        def moveUp(event):
-            global end
-            global begin
-            global chosen
-            if (chosen == begin) and (begin - 1 >= 0):
-                begin -= 1
-                end -= 1
-            if chosen > 0:
-                chosen -= 1
-            show(begin, end, chosen)
+        def move_up(event):
+            if (self.chosen == self.begin) and (self.begin - 1 >= 0):
+                self.begin -= 1
+                self.end -= 1
+            if self.chosen > 0:
+                self.chosen -= 1
+            show(self.begin, self.end, self.chosen)
 
         all = set()
+
         def show(begin, end, chosen):
-            global id
             for container in all:
                 container.grid_remove()
             all.clear()
@@ -75,33 +73,28 @@ class EraseTaskInteraction(BaseInteraction.BaseInteraction):
                     color = "black"
                     if chosen == i:
                         color = "blue"
-                        id = entry[2]
+                        self.id = entry[2]
                     container = LabelFrame(root, bd=0, bg="grey", height=2)
                     inserted = entry[1]
-                    insertedLabel = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)
-                    insertedLabel.pack(fill=X)
+                    inserted_label = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)
+                    inserted_label.pack(fill=X)
                     title = entry[0]
                     if len(title) > 50:
                         title = title[:51]
                         title += "..."
-                    titleLabel = Label(container, text=title, fg=color, justify=LEFT, anchor=W, width=55)
-                    titleLabel.pack(fill=X)
+                    title_label = Label(container, text=title, fg=color, justify=LEFT, anchor=W, width=55)
+                    title_label.pack(fill=X)
                     container.grid(row=i, column=1, sticky=W)
                     all.add(container)
                 i += 1
 
+        root.bind('<Return>', erase_and_dispose)
+        root.bind('<w>', move_up)
+        root.bind('<s>', move_down)
 
-        root.bind('<Return>', eraseAndDispose)
-        root.bind('<w>', moveUp)
-        root.bind('<s>', moveDown)
-
-        show(begin, end, chosen)
-
-        root.iconify()
-        root.update()
-        root.deiconify()
-
-        root.mainloop()
+        show(self.begin, self.end, self.chosen)
+        self.let_interact(root)
+        self.re_init_vars()
 
     def get_hotkey(self):
         return ['Shift', 'Alt', '3']
