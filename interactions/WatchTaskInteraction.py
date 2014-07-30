@@ -1,13 +1,13 @@
 __author__ = 'mark'
 
-from api import BaseInteraction
-from Tkinter import *
+import BasicListTaskInteraction
 from helper import dbhelper
 
 
-class WatchTaskInteraction(BaseInteraction.BaseInteraction):
+class WatchTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
     begin = 0
     end = 5
+    display_count = 6
 
     def re_init_vars(self):
         self.begin = 0
@@ -15,6 +15,7 @@ class WatchTaskInteraction(BaseInteraction.BaseInteraction):
 
     def execute(self):
         root = self.initialize_window("Watch Tasks")
+        label_tupels = self.add_containers(root)
         entries = dbhelper.get_all_entries()
 
         def dispose(event):
@@ -32,31 +33,40 @@ class WatchTaskInteraction(BaseInteraction.BaseInteraction):
                 self.end -= 1
             show(self.begin, self.end)
 
-        all = set()
         def show(begin, end):
-            for container in all:
-                container.grid_remove()
-            all.clear()
             i = 0
+            container_index = 0
             for entry in entries:
                 if (i >= begin) and (i <= end):
                     done = entry[2]
                     color = "black"
                     if done == 1:
-                        color = "grey"
-                    container = LabelFrame(root, bd=0, bg="grey", height=2)
+                        color = "darkgrey"
+
+                    bgcolor = "white"
+                    if i % 2 == 0:
+                        bgcolor = "lightblue"
+
+                    labels = label_tupels[container_index]
+
                     inserted = entry[1]
-                    inserted_label = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)
-                    inserted_label.pack(fill=X)
+                    inserted_label = labels[0]
+                    inserted_label.configure(text=inserted)
+                    inserted_label.configure(fg=color)
+                    inserted_label.configure(bg=bgcolor)
+
                     title = entry[0]
                     if len(title) > 50:
                         title = title[:51]
                         title += "..."
-                    title_label = Label(container, text=title, fg=color, justify=LEFT, anchor=W, width=55)
-                    title_label.pack(fill=X)
-                    container.grid(row=i, column=1, sticky=W)
-                    all.add(container)
+                    title_label = labels[1]
+                    title_label.configure(text=title)
+                    title_label.configure(fg=color)
+                    title_label.configure(bg=bgcolor)
+
+                    container_index += 1
                 i += 1
+            root.update()
 
         root.bind('<Return>', dispose)
         root.bind('<w>', move_up)
