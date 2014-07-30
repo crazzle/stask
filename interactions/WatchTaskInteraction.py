@@ -2,8 +2,8 @@ __author__ = 'mark'
 
 from api import BaseInteraction
 from Tkinter import *
-import sqlite3
-import datetime
+from helper import dbhelper
+
 
 class WatchTaskInteraction(BaseInteraction.BaseInteraction):
     begin = 0
@@ -13,24 +13,9 @@ class WatchTaskInteraction(BaseInteraction.BaseInteraction):
         self.begin = 0
         self.end = 5
 
-    @staticmethod
-    def get_all_entries():
-        connection = sqlite3.connect("stasks.db")
-        cursor = connection.cursor()
-        rows = cursor.execute("select * from tasks order by done, insertTS DESC")
-        connection.commit()
-        entries = list()
-        for row in rows:
-            done = row[3]
-            date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
-            inserted = date
-            title = row[1]
-            entries.append((title, inserted, done))
-        return entries
-
     def execute(self):
         root = self.initialize_window("Watch Tasks")
-        entries = self.get_all_entries()
+        entries = dbhelper.get_all_entries()
 
         def dispose(event):
             root.destroy()

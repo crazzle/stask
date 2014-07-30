@@ -2,8 +2,7 @@ __author__ = 'mark'
 
 from api import BaseInteraction
 from Tkinter import *
-import sqlite3
-import datetime
+from helper import dbhelper
 
 
 class EraseTaskInteraction(BaseInteraction.BaseInteraction):
@@ -11,38 +10,20 @@ class EraseTaskInteraction(BaseInteraction.BaseInteraction):
     begin = 0
     end = 5
     chosen = 0
-    id = -1
+    task_id = -1
 
     def re_init_vars(self):
         self.begin = 0
         self.end = 5
         self.chosen = 0
-        self.id = -1
-
-    @staticmethod
-    def get_all_open_entries():
-        connection = sqlite3.connect("stasks.db")
-        cursor = connection.cursor()
-        rows = cursor.execute("select * from tasks where done=0 order by insertTS DESC")
-        connection.commit()
-        entries = list()
-        for row in rows:
-            date = datetime.datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
-            inserted = date
-            title = row[1]
-            task_id = row[0]
-            entries.append((title, inserted, task_id))
-        return entries
+        self.task_id = -1
 
     def execute(self):
         root = self.initialize_window("Erase Tasks")
-        entries = self.get_all_open_entries()
+        entries = dbhelper.get_all_open_entries()
 
         def erase_and_dispose(event):
-            connection = sqlite3.connect("stasks.db")
-            cursor = connection.cursor()
-            cursor.execute("update tasks set done=1 where id=?", [self.id])
-            connection.commit()
+            dbhelper.erase(self.task_id)
             root.destroy()
 
         def move_down(event):
@@ -73,7 +54,7 @@ class EraseTaskInteraction(BaseInteraction.BaseInteraction):
                     color = "black"
                     if chosen == i:
                         color = "blue"
-                        self.id = entry[2]
+                        self.task_id = entry[2]
                     container = LabelFrame(root, bd=0, bg="grey", height=2)
                     inserted = entry[1]
                     inserted_label = Label(container, text=inserted, fg=color, justify=LEFT, anchor=W, width=55)

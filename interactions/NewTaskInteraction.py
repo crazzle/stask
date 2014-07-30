@@ -2,7 +2,7 @@ __author__ = 'mark'
 
 from api import BaseInteraction
 from Tkinter import *
-import sqlite3
+from helper import dbhelper
 
 
 class NewTaskInteraction(BaseInteraction.BaseInteraction):
@@ -14,12 +14,9 @@ class NewTaskInteraction(BaseInteraction.BaseInteraction):
         t.focus_set()
 
         def save_and_dispose(event):
-            title = event.widget.get("0.0",END)
+            title = event.widget.get("0.0", END)
             title = str(title).strip()
-            connection = sqlite3.connect("stasks.db")
-            cursor = connection.cursor()
-            cursor.execute("insert into tasks(title) values (?)", [title])
-            connection.commit()
+            dbhelper.persist(title)
             root.destroy()
 
         t.bind('<Return>', save_and_dispose)
