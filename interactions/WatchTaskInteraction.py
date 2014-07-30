@@ -41,7 +41,7 @@ class WatchTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
                     done = entry[2]
                     color = "black"
                     if done == 1:
-                        color = "darkgrey"
+                        color = "darkgreen"
 
                     bgcolor = "white"
                     if i % 2 == 0:

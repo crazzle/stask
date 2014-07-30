@@ -49,7 +49,7 @@ class EraseTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
                 if (i >= begin) and (i <= end):
                     color = "black"
                     if chosen == i:
-                        color = "blue"
+                        color = "darkgreen"
                         self.task_id = entry[2]
 
                     bgcolor = "white"
