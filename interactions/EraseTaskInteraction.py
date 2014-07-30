@@ -1,6 +1,5 @@
 __author__ = 'mark'
 
-from Tkinter import *
 import BasicListTaskInteraction
 from helper import dbhelper
 
