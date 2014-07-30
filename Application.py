@@ -38,5 +38,8 @@ hot.addHotkey(newTaskInteraction.get_hotkey(), newTaskInteraction.on_key_execute
 hot.addHotkey(watchTaskInteraction.get_hotkey(), watchTaskInteraction.on_key_execute)
 hot.addHotkey(eraseTaskInteraction.get_hotkey(), eraseTaskInteraction.on_key_execute)
 
+#exit our tool
+hot.addHotkey(['Shift', 'Alt', '0'], exit)
+
 #start looking for hotkey.
 hot.start()
