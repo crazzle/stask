@@ -1,6 +1,7 @@
 from interactions import EraseTaskInteraction, NewTaskInteraction, WatchTaskInteraction
 from libs import pyhk
 import sqlite3
+import sys
 
 __author__ = 'keinmark'
 
@@ -39,7 +40,7 @@ hot.addHotkey(watchTaskInteraction.get_hotkey(), watchTaskInteraction.on_key_exe
 hot.addHotkey(eraseTaskInteraction.get_hotkey(), eraseTaskInteraction.on_key_execute)
 
 #exit our tool
-hot.addHotkey(['Shift', 'Alt', '0'], exit)
+hot.addHotkey(['Shift', 'Alt', '0'], sys.exit)
 
 #start looking for hotkey.
 hot.start()
