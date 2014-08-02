@@ -2,6 +2,7 @@ __author__ = 'mark'
 
 import BasicListTaskInteraction
 from helper import dbhelper
+import subprocess
 
 
 class EraseTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
@@ -10,6 +11,9 @@ class EraseTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
     end = 5
     chosen = 0
     task_id = -1
+
+    def on_key_execute(self):
+        subprocess.Popen("python interactions\EraseTaskRunner.py")
 
     def re_init_vars(self):
         self.begin = 0

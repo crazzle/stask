@@ -3,9 +3,13 @@ __author__ = 'mark'
 from api import BaseInteraction
 from Tkinter import *
 from helper import dbhelper
+import subprocess
 
 
 class NewTaskInteraction(BaseInteraction.BaseInteraction):
+    def on_key_execute(self):
+        subprocess.Popen("python interactions\NewTaskRunner.py")
+
     def execute(self):
         root = self.initialize_window("New Task")
 
@@ -29,3 +33,4 @@ class NewTaskInteraction(BaseInteraction.BaseInteraction):
 
     def get_hotkey(self):
         return ['Shift', 'Alt', '1']
+

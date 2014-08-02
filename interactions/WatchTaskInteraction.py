@@ -2,12 +2,16 @@ __author__ = 'mark'
 
 import BasicListTaskInteraction
 from helper import dbhelper
+import subprocess
 
 
 class WatchTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
     begin = 0
     end = 5
     display_count = 6
+
+    def on_key_execute(self):
+        subprocess.Popen("python interactions\WatchTaskRunner.py")
 
     def re_init_vars(self):
         self.begin = 0

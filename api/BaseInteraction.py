@@ -7,10 +7,6 @@ from Tkinter import *
 # there is already an executing interaction
 class BaseInteraction(object):
 
-    # Indicates if an interaction implementation is currently executing
-    global closed
-    closed = True
-
     # Interaction logic to be implemented
     def execute(self):
         raise NotImplementedError()
@@ -21,28 +17,7 @@ class BaseInteraction(object):
 
     # Invoked by hotkey, controls the locking
     def on_key_execute(self):
-        if self.is_closed():
-            self.open()
-            self.execute()
-            self.close()
-
-    # Close when an interaction is finished
-    @staticmethod
-    def close():
-        global closed
-        closed = True
-
-    # Open when an interaction is going to be executed
-    @staticmethod
-    def open():
-        global closed
-        closed = False
-
-    # Check if any interaction is currently executing
-    @staticmethod
-    def is_closed():
-        global closed
-        return closed
+        raise NotImplementedError()
 
     # Initializes the TkInter-Window
     @staticmethod
