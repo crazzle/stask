@@ -13,7 +13,7 @@ class EraseTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
     task_id = -1
 
     def on_key_execute(self):
-        subprocess.Popen("python runner\EraseTaskRunner.py")
+        subprocess.Popen("python .\\runner\EraseTaskRunner.py")
 
     def re_init_vars(self):
         self.begin = 0

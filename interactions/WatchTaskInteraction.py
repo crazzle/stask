@@ -11,7 +11,7 @@ class WatchTaskInteraction(BasicListTaskInteraction.BasicListTaskInteraction):
     display_count = 6
 
     def on_key_execute(self):
-        subprocess.Popen("python runner\WatchTaskRunner.py")
+        subprocess.Popen("python .\\runner\WatchTaskRunner.py")
 
     def re_init_vars(self):
         self.begin = 0
