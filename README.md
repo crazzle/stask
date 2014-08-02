@@ -17,33 +17,27 @@ It is properly tested with Python 2.7
 
 ### new Task: 
 
-['Shift', 'Alt', '1'], 
-
+['Shift', 'Alt', '1'] to open interaction, 
 [Escape] for exit
 
 ### watch Tasks: 
 
-['Shift', 'Alt', '2'], 
-
+['Shift', 'Alt', '2'] to open interaction, 
 [Escape] for exit, 
-
 [w] to navigate up, 
-
 [s] to navigate down
 
 ### erase Task: 
 
-['Shift', 'Alt', '3'], 
-
+['Shift', 'Alt', '3'] to open interaction, 
 [Escape] for exit, 
-
 [w] to navigate up, 
-
 [s] to navigate down, 
-
 [Enter] for erase task
 
-### shutdown stasks: ['Shift', 'Alt', '0']
+### shutdown stasks: 
+
+['Shift', 'Alt', '0'] to close the application
 
 ## How to install it
 
