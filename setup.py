@@ -21,3 +21,5 @@ setup(
 #
 # Build distribution
 # python setup.py bdist_wininst
+#
+# Currently not working!!!!!!
