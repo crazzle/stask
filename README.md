@@ -1,13 +1,22 @@
-stask
-=====
-Stack your tasks
+#Stask
 
-Sweet little keyboard shortcuts:
+Stack your tasks - Stasks is a fast and simple solution to organize your daily to-do's.
 
-new Task        :       ['Shift', 'Alt', '1'], [Escape] for exit
+Important: Windows only!
 
-watch Tasks     :       ['Shift', 'Alt', '2'], [Escape] for exit, [w] to navigate up, [s] to navigate down
+Stasks is just another to-do list tool, why USE IT:
+* Build for superfast keyboard only use
+* System-wide hotkeys to invoke the tool from every window
+* Releases focus and gives it back to the window from which Stasks was invoked after interaction is done
 
-erase Task      :       ['Shift', 'Alt', '3'], [Escape] for exit, [w] to navigate up, [s] to navigate down, [Enter] for erase task
+Stasks won't interrupt your workflow, it integrates into it.
 
-shutdown stasks :       ['Shift', 'Alt', '0']
+It is properly tested with Python 2.7
+
+## Sweet little keyboard shortcuts:
+
+* new Task        :       ['Shift', 'Alt', '1'], [Escape] for exit
+* watch Tasks     :       ['Shift', 'Alt', '2'], [Escape] for exit, [w] to navigate up, [s] to navigate down
+* erase Task      :       ['Shift', 'Alt', '3'], [Escape] for exit, [w] to navigate up, [s] to navigate down, [Enter] for erase task
+* shutdown stasks :       ['Shift', 'Alt', '0']
+
