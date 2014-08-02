@@ -10,7 +10,8 @@ setup(
      author_email = "",
      py_modules = ["Application","pyHook","pywin32"],
      packages = ["api", "helper","interactions","libs"],
-     windows=["Application.py"]
+     windows=["Application.py"],
+     package_data = {"paket1" : ["EraseTaskRunner.py", "WatchTaskRunner.py", "NewTaskRunner.py"]}
      )
 
 

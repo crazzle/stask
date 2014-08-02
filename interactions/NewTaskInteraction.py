@@ -8,7 +8,7 @@ import subprocess
 
 class NewTaskInteraction(BaseInteraction.BaseInteraction):
     def on_key_execute(self):
-        subprocess.Popen("python interactions\NewTaskRunner.py")
+        subprocess.Popen("python runner\NewTaskRunner.py")
 
     def execute(self):
         root = self.initialize_window("New Task")
