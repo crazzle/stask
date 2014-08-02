@@ -4,7 +4,7 @@ Stack your tasks - Stasks is a fast and simple solution to organize your daily t
 
 Important: Windows only!
 
-Stasks is just another to-do list tool, why USE IT:
+Why you should use Stask:
 * Build for superfast keyboard only use
 * System-wide hotkeys to invoke the tool from every window
 * Releases focus and gives it back to the window from which Stasks was invoked after interaction is done
