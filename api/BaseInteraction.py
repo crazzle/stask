@@ -15,7 +15,7 @@ class BaseInteraction(object):
     def get_hotkey(self):
         raise NotImplementedError()
 
-    # Invoked by hotkey, controls the locking
+    # We need a runner because we don't want to challenge TKInter with Threads...
     def on_key_execute(self):
         raise NotImplementedError()
 
