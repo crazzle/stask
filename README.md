@@ -4,6 +4,8 @@ Stack your tasks - Stasks is a fast and simple solution to organize your daily t
 
 Important: Windows only!
 
+Important: No initial UI - you start it and it runs completely in the background listening to the shortcuts. Don't get confused!
+
 Why you should use Stask:
 * Build for superfast keyboard only use
 * System-wide hotkeys to invoke the tool from every window
