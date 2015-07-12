@@ -4,7 +4,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="IdProvider" IDEtalkID="2A87FB318B46B377C2756199127784D7" />
-  <component name="ProjectRootManager" version="2" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" assert-keyword="false" jdk-15="false" />
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
@@ -22,4 +22,3 @@
     </states>
   </component>
 </project>
-

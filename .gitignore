@@ -1,3 +1,5 @@
 stasks.db
 /build
 /dist
+/.idea
+*.iml
